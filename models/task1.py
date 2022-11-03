@@ -77,7 +77,7 @@ def train(df: pd.DataFrame, f1, f2, c1, c2, eta, nb_epochs, is_bias) -> float:
             net = (x * W).sum()
             y = signum(net)
             if y != d:
-                error_found = True
+                error_found = Tr
                 error = d - y
                 W = W + (eta * x * error)
 

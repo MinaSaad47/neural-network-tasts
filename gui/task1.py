@@ -120,6 +120,11 @@ class Task1(Task):
             messagebox.showinfo(title="finished training",
                                 message=f'accuracy: {accuracy}')
 
+            
+
+            # confusion matrix
+
+        # gui
         traning_frame = tk.Frame(
             self, highlightbackground='green', highlightthickness=2)
 
