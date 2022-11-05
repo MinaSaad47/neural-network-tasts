@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from utils.preprocessing import label_encode
 from utils.activition_functions import signum
 from utils.metrices import accuracy
@@ -77,7 +77,7 @@ def train(df: pd.DataFrame, f1, f2, c1, c2, eta, nb_epochs, is_bias) -> float:
             net = (x * W).sum()
             y = signum(net)
             if y != d:
-                error_found = Tr
+                error_found = True
                 error = d - y
                 W = W + (eta * x * error)
 
@@ -91,6 +91,31 @@ def train(df: pd.DataFrame, f1, f2, c1, c2, eta, nb_epochs, is_bias) -> float:
 
     df = df[(df[class_column] == c1) | (df[class_column] == c2)]
     plot_decesion_boundary(df, f1, f2, class_column, X_Train, Y_Train)
-
+    create_confusion_matrix(D_Train=D_Train, Y_Train=Y_Train)
     signum_vectorizor = np.vectorize(signum)
+
     return accuracy(X_Test, D_Test, W, signum_vectorizor)
+
+
+def create_confusion_matrix(D_Train, Y_Train):
+    conf_y_train = np.zeros(shape=D_Train.shape)
+
+    for i in D_Train:
+        conf_y_train[i] = signum(D_Train[i])
+
+    conf_y_pred = np.zeros(shape=Y_Train.shape)
+
+    for i in range(40):
+        conf_y_pred[i] = signum(Y_Train[i])
+
+    Numb_of_classes = np.unique(conf_y_train)
+    conf_matrix = np.zeros((len(Numb_of_classes), len(Numb_of_classes)))
+    for i in range(len(Numb_of_classes)):
+        for j in range(len(Numb_of_classes)):
+            conf_matrix[i, j] = np.sum((conf_y_train == Numb_of_classes[i]) & (
+                conf_y_pred == Numb_of_classes[j]))
+
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=conf_matrix, display_labels=None)
+    disp.plot()
+    plt.show()
