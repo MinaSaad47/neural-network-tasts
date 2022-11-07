@@ -90,7 +90,7 @@ def train(df: pd.DataFrame, f1, f2, c1, c2, eta, nb_epochs, is_bias) -> float:
         Y_Train[i] = y
 
     df = df[(df[class_column] == c1) | (df[class_column] == c2)]
-    plot_decesion_boundary(df, f1, f2, class_column, X_Train, Y_Train)
+    plot_decesion_boundary(df, f1, f2, class_column, W)
     create_confusion_matrix(D_Train=D_Train, Y_Train=Y_Train)
     signum_vectorizor = np.vectorize(signum)
 

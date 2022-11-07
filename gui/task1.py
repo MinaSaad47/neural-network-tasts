@@ -118,9 +118,7 @@ class Task1(Task):
                 df, f1, f2, c1, c2, eta, nb_epochs, is_bias)
 
             messagebox.showinfo(title="finished training",
-                                message=f'accuracy: {accuracy}')
-
-            
+                                message=f'accuracy: {accuracy * 100} %')
 
             # confusion matrix
 
