@@ -1,7 +1,11 @@
 import numpy as np
 
 
-def accuracy(x_test, y_test, weight, actfunc) -> float:
+def accuracy(Y_Pred, Y_True) -> float:
+    return (Y_Pred == Y_True).sum() / Y_True.shape[0]
+
+
+def accuracy1(x_test, y_test, weight, actfunc) -> float:
     nb_correct = 0
     for x, d in zip(x_test, y_test):
         net = np.dot(x, weight)

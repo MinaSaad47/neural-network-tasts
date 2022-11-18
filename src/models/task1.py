@@ -3,9 +3,11 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+from sklearn.preprocessing import MinMaxScaler
+
 from utils.preprocessing import label_encode
 from utils.activition_functions import signum
-from utils.metrices import accuracy
+from utils.metrices import accuracy1
 from utils.visualization import visualize_features, plot_decesion_boundary
 
 
@@ -36,6 +38,10 @@ def visualize(df: pd.DataFrame, f1, f2):
 def train(df: pd.DataFrame, f1, f2, c1, c2, eta, nb_epochs, is_bias) -> float:
     features = [f1, f2]
     W = np.array([-1, 0])
+    
+    # nomalize feature to prevent overflow
+    scaler = MinMaxScaler()
+    df[features] = scaler.fit_transform(df[features])
 
     # check if bias requested
     if is_bias:
@@ -94,7 +100,7 @@ def train(df: pd.DataFrame, f1, f2, c1, c2, eta, nb_epochs, is_bias) -> float:
     create_confusion_matrix(D_Train=D_Train, Y_Train=Y_Train)
     signum_vectorizor = np.vectorize(signum)
 
-    return accuracy(X_Test, D_Test, W, signum_vectorizor)
+    return accuracy1(X_Test, D_Test, W, signum_vectorizor)
 
 
 def create_confusion_matrix(D_Train, Y_Train):

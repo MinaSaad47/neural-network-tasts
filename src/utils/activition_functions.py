@@ -3,3 +3,6 @@ def signum(net):
         return 1
     else:
         return -1
+
+def linear(net):
+    return net
