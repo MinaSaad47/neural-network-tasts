@@ -44,3 +44,5 @@ tomli==2.0.1
 tornado==6.2
 traitlets==5.5.0
 wcwidth==0.2.5
+xeus-python==0.14.3
+xeus-python-shell==0.5.0
